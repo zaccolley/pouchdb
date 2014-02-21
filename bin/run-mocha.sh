@@ -6,6 +6,7 @@ if [ ! $COVERAGE ]; then
         -r ./tests/node.setup.js \
         -R spec \
         --grep=$GREP \
+        -b \
         tests/test.*.js
 else
     ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- \
@@ -13,6 +14,7 @@ else
         -r ./tests/node.setup.js \
         -R spec \
         --grep=$GREP \
+        -b \
         tests/test.*.js
 fi
 
