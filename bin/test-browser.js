@@ -83,6 +83,7 @@ function startTest() {
 
   var script =
     'var cb = arguments[arguments.length - 1];' +
+    'runner.on("fail", function() { cb(results); });' +
     'runner.on("end", function() { cb(results); });';
 
   client = wd.promiseChainRemote();
