@@ -705,12 +705,15 @@ adapters.map(function (adapters) {
           foo: 'bar_' + i
         });
       }
+
       remote.bulkDocs({ docs: docs }, function (err, info) {
-        db.replicate.from(remote, {}, function () {
-          db.allDocs(function (err, res) {
-            res.total_rows.should.equal(num);
-            done();
-          });
+        db.replicate.from(remote, {
+          complete: testUtils.bindSuccess(done, function success(res) {
+            db.allDocs(function (err, res) {
+              res.total_rows.should.equal(num);
+              done();
+            });
+          })
         });
       });
     });

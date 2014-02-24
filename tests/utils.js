@@ -4,19 +4,22 @@
 
 var testUtils = {};
 
+testUtils.bindSuccess = function (done, fun) {
+  return function(err, res) {
+    if (err) {
+      done(err);
+    } else {
+      fun(res);
+    }
+  };
+};
+
 testUtils.couchHost = function () {
   if (typeof module !== 'undefined' && module.exports) {
     return process.env.COUCH_HOST || 'http://localhost:5984';
   }
   // In the browser we default to the CORS server, in future will change
   return 'http://localhost:2020';
-};
-
-testUtils.uuid = function () {
-  var S4 = function () {
-    return Math.floor(Math.random() * 65536).toString(16);
-  };
-  return S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4();
 };
 
 testUtils.makeBlob = function (data, type) {
