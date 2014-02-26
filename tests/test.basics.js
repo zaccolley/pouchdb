@@ -291,7 +291,7 @@ adapters.map(function (adapter) {
       });
     });
 
-    it('Bulk docs', function (done) {
+    it('grep-me', function (done) {
       var db = new PouchDB(dbs.name);
       db.bulkDocs({
         docs: [
