@@ -56,10 +56,8 @@
     "publish-site": "./bin/publish-site.sh"
   },
   "browser": {
-    "./adapters/leveldb": false,
     "./deps/buffer": false,
     "request": false,
-    "levelup": false,
     "leveldown": false,
     "crypto": false,
     "bluebird": "lie",
