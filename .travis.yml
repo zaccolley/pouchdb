@@ -20,8 +20,106 @@ env:
   - secure: "Ut9pRqzbVJHxg8vt1Cx0bTv4HAroBkvOLjtHF+11f/OzfNnAORIEPnJFHqGbOTozCPOizmzgwvCGqq9gYL8SakrfiI0wBfaL+lk0ub/FPuJ1+hwrLDU0Ju4O5reL0OSu0JB+OTmXfILuRQQkD9/7uwUEbLDFId4phSq3cz1UsK0="
 
   matrix:
-  - CLIENT=node npm test
-  - NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=1 CLIENT=node npm test
+  - TRY=2 CLIENT=node npm test
+  - TRY=3 CLIENT=node npm test
+  - TRY=4 CLIENT=node npm test
+  - TRY=5 CLIENT=node npm test
+  - TRY=6 CLIENT=node npm test
+  - TRY=7 CLIENT=node npm test
+  - TRY=8 CLIENT=node npm test
+  - TRY=9 CLIENT=node npm test
+  - TRY=10 CLIENT=node npm test
+  - TRY=11 CLIENT=node npm test
+  - TRY=12 CLIENT=node npm test
+  - TRY=13 CLIENT=node npm test
+  - TRY=14 CLIENT=node npm test
+  - TRY=15 CLIENT=node npm test
+  - TRY=16 CLIENT=node npm test
+  - TRY=17 CLIENT=node npm test
+  - TRY=18 CLIENT=node npm test
+  - TRY=19 CLIENT=node npm test
+  - TRY=20 CLIENT=node npm test
+  - TRY=21 CLIENT=node npm test
+  - TRY=22 CLIENT=node npm test
+  - TRY=23 CLIENT=node npm test
+  - TRY=24 CLIENT=node npm test
+  - TRY=25 CLIENT=node npm test
+  - TRY=26 CLIENT=node npm test
+  - TRY=27 CLIENT=node npm test
+  - TRY=28 CLIENT=node npm test
+  - TRY=29 CLIENT=node npm test
+  - TRY=30 CLIENT=node npm test
+  - TRY=31 CLIENT=node npm test
+  - TRY=32 CLIENT=node npm test
+  - TRY=33 CLIENT=node npm test
+  - TRY=34 CLIENT=node npm test
+  - TRY=35 CLIENT=node npm test
+  - TRY=36 CLIENT=node npm test
+  - TRY=37 CLIENT=node npm test
+  - TRY=38 CLIENT=node npm test
+  - TRY=39 CLIENT=node npm test
+  - TRY=40 CLIENT=node npm test
+  - TRY=41 CLIENT=node npm test
+  - TRY=42 CLIENT=node npm test
+  - TRY=43 CLIENT=node npm test
+  - TRY=44 CLIENT=node npm test
+  - TRY=45 CLIENT=node npm test
+  - TRY=46 CLIENT=node npm test
+  - TRY=47 CLIENT=node npm test
+  - TRY=48 CLIENT=node npm test
+  - TRY=49 CLIENT=node npm test
+  - TRY=50 CLIENT=node npm test
+  - TRY=1 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=2 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=3 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=4 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=5 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=6 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=7 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=8 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=9 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=10 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=11 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=12 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=13 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=14 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=15 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=16 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=17 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=18 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=19 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=20 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=21 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=22 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=23 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=24 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=25 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=26 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=27 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=28 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=29 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=30 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=31 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=32 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=33 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=34 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=35 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=36 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=37 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=38 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=39 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=40 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=41 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=42 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=43 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=44 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=45 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=46 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=47 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=48 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=49 NATIVEPROMISE=1 CLIENT=firefox npm test
+  - TRY=50 NATIVEPROMISE=1 CLIENT=firefox npm test
   - CLIENT=chrome npm test
 
 matrix:
