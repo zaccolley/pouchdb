@@ -81,7 +81,7 @@ You can also delete a database using just the name:
 PouchDB.destroy('dbname', function(err, info) { });
 {% endhighlight %}
 
-{% include anchor.html title="Create / Update a document" hash="create_document" %}
+{% include anchor.html title="Create / update a document" hash="create_document" %}
 
 ### Using db.put()
 {% highlight js %}
@@ -609,19 +609,22 @@ db.removeAttachment('otherdoc',
 db.query(fun, [options], [callback])
 {% endhighlight %}
 
-Retrieve a view, which allows you to perform more complex queries on PouchDB. The [CouchDB documentation for map reduce](http://docs.couchdb.org/en/latest/couchapp/views/intro.html) applies to PouchDB.
+Retrieve a view, which allows you to perform more complex queries on PouchDB. The [CouchDB documentation for map/reduce](http://docs.couchdb.org/en/latest/couchapp/views/intro.html) applies to PouchDB.
+
+This method will be very slow, and should probably not be used in production, unless you save it first using <a href='#create_index'>`putIndex()`</a>).
 
 ### Options
 
 All options default to `false` unless otherwise specified.
 
-* `fun`: Name of an existing view, the map function itself, or a full CouchDB-style mapreduce object: `{map : ..., reduce: ...}`.
+* `fun`: Name of an existing view, the map function itself, or a full CouchDB-style map/reduce object: `{map : ..., reduce: ...}`.
 * `options.reduce`: Reduce function, or the string name of a built-in function: `'_sum'`, `'_count'`, or `'_stats'`.  Defaults to `false` (no reduce).
     * Tip: if you're not using a built-in, [you're probably doing it wrong](http://youtu.be/BKQ9kXKoHS8?t=865s).
+* `options.group`: True if you want the reduce function to group results by keys, rather than returning a single result. Defaults to `false`. 
 * `options.include_docs`: Include the document in each row in the `doc` field.
     - `options.conflicts`: Include conflicts in the `_conflicts` field of a doc.
   - `options.attachments`: Include attachment data.
-* `options.startkey` & `options.endkey`: Get documents with keys in a certain range (inclusive/inclusive).
+* `options.startkey` & `options.endkey`: Get results with keys in a certain range (inclusive/inclusive).
 * `options.descending`: Reverse the order of the output documents.
 * `options.key`: Only return rows matching this string key.
 * `options.keys`: Array of string keys to fetch in a single shot.
@@ -630,6 +633,10 @@ All options default to `false` unless otherwise specified.
     - The row for a deleted document will have the revision ID of the deletion, and an extra key `"deleted":true` in the `value` property.
     - The row for a nonexistent document will just contain an `"error"` property with the value `"not_found"`.
     - For details, see the [CouchDB query options documentation](http://wiki.apache.org/couchdb/HTTP_view_API#Querying_Options).
+* `options.stale`: One of `'ok'` or `'update_after'`.  Only applies to saved indexes, not temporary queries. Here's how it works:
+    * unspecified: PouchDB/CouchDB will return the most up-to-date results, waiting if necessary for the index to build.  This also kicks off a build if there wasn't one running already.
+    * `'ok'`: PouchDB/CouchDB will return results immediately, even if they're out-of-date.
+    * `'update_after'`: PouchDB/CouchDB will return results immediately, but kick off a build right afterwards, if necessary.
 
 #### Example Usage:
 {% highlight js %}
@@ -665,7 +672,7 @@ db.query({map: map}, {reduce: false}, function(err, response) { });
 }
 {% endhighlight %}
 
-If u pass a function to `db.query` and give it the `emit` function as the second argument, then you can use a closure. (Otherwise we have to use `eval()` to bind `emit`.)
+If you pass a function to `db.query` and give it the `emit` function as the second argument, then you can use a closure. (Otherwise we have to use `eval()` to bind `emit`.)
 
 {% highlight js %}
 // BAD! will throw error
@@ -699,7 +706,55 @@ db.query(function(thisIs, awesome) {
 1. Local databases do not currently support view caching; everything is a live view.
 2. [Linked documents](https://wiki.apache.org/couchdb/Introduction_to_CouchDB_views#Linked_documents) (aka joins) are supported.  
 3. [Complex keys](https://wiki.apache.org/couchdb/Introduction_to_CouchDB_views#Complex_Keys) are supported.  Use them for fancy ordering (e.g. `[firstName, lastName, isFemale]`).
-4. Closures are only supported by local databases. CouchDB still requires self-contained map/reduce functions.
+4. Closures are only supported by local databases and temporary queries. CouchDB and saved indexes still requires self-contained map/reduce functions.
+
+{% include anchor.html title="Create / update an index" hash="create_index" %}
+
+{% highlight js %}
+db.putIndex('myIndex/myView', {
+  map : /* map function */, 
+  reduce : /* optional reduce function */
+}, [options], [callback])
+{% endhighlight %}
+
+Create or update an index, which allows you to perform faster <a href='#query_database'>`query()`</a> calls.
+
+When you first create an index, it will gradually build itself up as new documents are added, deleted, or modified.  You need to query first in order to kick off a build.
+
+#### Example Usage:
+
+{% highlight js %}
+db.putIndex('myIndex/myView', {
+  map : function (doc) {
+    emit(doc.artist);
+  }, reduce : '_count'
+  }, [options], [callback])
+{% endhighlight %}
+
+#### Example Response:
+
+{% highlight js %}
+{
+  "ok": true,
+  "id": "_design/myIndex",
+  "rev": "1-A6157A5EA545C99B00FF904EEF05FD9F"
+}
+{% endhighlight %}
+
+Indexes are saved just like regular documents, although their `_id` starts with the special reserved word `_design`.  The above example is equivalent to:
+
+
+{% highlight js %}
+db.put({
+  _id : '_design/myIndex'
+  myView : {
+    map : function (doc) {
+      emit(doc.artist);
+    },
+    reduce : '_count'
+  }
+}, [options], [callback])
+{% endhighlight %}
 
 {% include anchor.html title="Get database information" hash="database_information" %}
 
