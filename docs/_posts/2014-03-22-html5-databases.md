@@ -117,9 +117,46 @@ function addTodo(todoText) {
 
 ```
 
-At this point, if you aren't having flashbacks of replacing all your boilerplate `xmlHttpRequest.onreadystatechanged` calls with `$.ajax()`, you haven't been doing web development for very long.
+At this point, if you aren't having flashbacks of replacing all your bloated `xmlHttpRequest.onreadystatechanged` calls with `$.ajax()`, you haven't been doing web development for very long.
 
-### Notes
+So PouchDB is obviously giving us much prettier API to interact with IndexedDB.  But a pretty face is not enough, and even beauty pagents have their talent round, so let's see what kind of smarts PouchDB is hiding behind that pretty face.
+
+### Surfin' Safari, Cruisin' Couch
+
+The most impressive trick that PouchDB is pulling off under the hood, of course, is that the above code will work on Safari, iOS, and pre-KitKat Android, even though those browsers only support Web SQL, not IndexedDB.
+
+Additionally, since PouchDB supports CouchDB as an alternative backend, you can also extend support to even older browsers that don't support either Web SQL or IndexedDB, such as IE 9 and lower.  Assuming you've set up a CouchDB (or IrisCouch, or Cloudant, or whatever), you can do the following:
+
+```js
+var db;
+if ((PouchDB.adapters.idb && PouchDB.adapters.id.valid()) || (PouchDB.adapters.websql && PouchDB.adapters.webql.valid())) {
+  db = new PouchDB('mydb');
+  // sync bidirectionally with CouchDB
+  db.replicate.sync('http://mysite.com:5984/mydb', {live : true});
+} else {
+  // just use CouchDB directly
+  db = new PouchDB('http://mysite.com:5984/mydb');
+}
+```
+
+Your IE9 users will have to make more round-trips to the server, and they can't use your app offline, but you can use the `db` object exactly the same on all browsers.
+
+### Other quirks
+
+Of course, as with most everything in the web, the browser inconsistencies don't stop there.
+
+Now, normally I wouldn't subject the reader to a list of browser oddities, since it's mostly only interesting in a "cabinet of curiosities" kind of way, and also our own Dale Harvey [has already written extensively about it][dale-idb].  But just in case you're not already sold on PouchDB's abstraction over the native APIs, let's lift up the tentflap and have a quick look at the freak show:
+
+* **Chrome** does not support storing blobs in IndexedDB.
+* **IE 10 and 11** do not support complex keys in IndexedDB.
+* **Android 2.3** ships with obsolete version of the IndexedDB spec on some Samsung devices.
+* **Older Android browsers** crash on IndexedDB's `continue()` method, since it's a keyword.
+* **WebKit browsers** do not retrieve blobs correctly in SQLite.
+* **Safari** goes one step further by adding extraneous characters.
+
+I could go on and on, but hopefully I've shocked you enough that we can go back to the world of pretty APIs, and you can allow PouchDB to continue shielding you from the horrors of working with the native databases.
+
+##### Notes
 
 [1] Full disclosure: [I write chiclet-shaped apps][nolan] for a living. I also stole the "chiclet" line from [John Batelle][batelle-chiclets].
 
