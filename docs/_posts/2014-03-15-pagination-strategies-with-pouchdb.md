@@ -70,7 +70,11 @@ Here's the response:
 }
 ```
 
-**Potential gotcha!** Somewhat unintuitively, `allDocs()` doesn't return the full document data by default.  It only returns the document `id` and revision hash `rev`, unless you pass in the option `{include_docs : true}`.
+{% include alert_start.html %}
+
+<strong>Potential gotcha!</strong> Somewhat unintuitively, <code>allDocs()</code> doesn't return the full document data by default.  It only returns the document <code>id</code> and revision hash <code>rev</code>, unless you pass in the option <code>{include_docs : true}</code>.
+
+{% include alert_end.html %}
 
 All 20 documents are returned, no pagination involved.  We can visualize it graphically like this:
 
@@ -345,7 +349,11 @@ now.toJSON()          // "2014-03-15T00:04:00.000Z"
 partyLikeIts.toJSON() < now.toJSON(); // true
 ```
 
-**Note:** If you're worried about ID collisions, you could also use `new Date().toJSON() + Math.random()`.
+{% include alert_start.html %}
+
+<strong>Note:</strong> If you're worried about ID collisions, you could also use <code>new Date().toJSON() + Math.random()</code>.
+
+{% include alert_end.html %}
 
 Now we can fetch the 10 most recent docs:
 
